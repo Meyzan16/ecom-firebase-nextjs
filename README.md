@@ -1,1 +1,1 @@
-1. npm i bcryptjs firebase joi js-cookie jsonwebtoken mongoose react-toastify react-hot-toast stripe @stripe/stripe-js @headlessui/react
+1. npm i bcryptjs firebase joi js-cookie jsonwebtoken mongoose react-toastify react-hot-toast stripe @stripe/stripe-js @headlessui/react react-spinners
