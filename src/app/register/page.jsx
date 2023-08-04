@@ -51,13 +51,11 @@ const Register = () => {
       });
       setIsRegistered(true);
       setCommonLoader(false);
-      setFormData(initialFormData);
     } else {
       toast.error(data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
       setCommonLoader(false);
-      // setFormData(initialFormData);
     }
     // console.log(data);
   }
@@ -76,7 +74,7 @@ const Register = () => {
               <button
                 className="inline-flex w-full items-center justify-center bg-teal-600 px-6 py-4 text-lg
                   text-white translate-all duration-200 ease-in-out focus:shadow font-medium uppercase tracking-wide rounded-full "
-                onClick={() => router.push('/login')}
+                onClick={() => router.push("/login")}
               >
                 Login
               </button>

@@ -8,7 +8,7 @@ const schema = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required().messages({
-    'string.min': 'password minimal 6 karakter',
+    'string.min': 'password of at least 6 characters',
   }),
   role: Joi.string().required(),
 });
@@ -55,10 +55,11 @@ export async function POST(req) {
       }
     }
   } catch (error) {
-    console.error("Error is new user registration");
+    console.log("Error is new user registration");
     return NextResponse.json({
       success: false,
       message: "Something went wrong ! Please try again later",
+      error
     });
   }
 }

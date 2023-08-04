@@ -80,8 +80,7 @@ export const registrationFormControls = [
     },
 ];
 
-export const loginFormControls = [
-    
+export const loginFormControls = [  
     {
         id: 'email',
         type: 'email',
