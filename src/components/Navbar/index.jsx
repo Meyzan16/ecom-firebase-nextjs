@@ -4,12 +4,12 @@ import { GlobalContext } from "@/context";
 import { adminNavOptions, navOptions } from "@/utils";
 import { Fragment, useContext } from "react";
 import CommonModal from "../CommonModal";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
-const isAdminView = false;
 
-function NavItems({ isModalView = false }) {
+
+function NavItems({ isModalView = false, isAdminView, router }) {
   return (
     <div
       className={`items-center justify-between w-full md:flex md:w-auto ${
@@ -28,6 +28,7 @@ function NavItems({ isModalView = false }) {
               <li
                 className="cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded-lg md:p-0"
                 key={item.id}
+                onClick={() => router.push(item.path)}
               >
                 {item.label}
               </li>
@@ -36,6 +37,7 @@ function NavItems({ isModalView = false }) {
               <li
                 className="cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded-lg md:p-0"
                 key={item.id}
+                onClick={() => router.push(item.path)}
               >
                 {item.label}
               </li>
@@ -50,8 +52,9 @@ const Navbar = () => {
 
   const { showNavModal, setShowNavModal } = useContext(GlobalContext);
   const { user, isAuthUser,setIsAuthUser,setUser } = useContext(GlobalContext);
+  const pathName = usePathname();
 
-  console.log(user,isAuthUser, 'navbar');
+  // console.log(user,isAuthUser, 'navbar');
 
   async function handleLogout (){
     setIsAuthUser(false);
@@ -61,17 +64,19 @@ const Navbar = () => {
     router.push('/')
   }
 
+  const isAdminView = pathName.includes('admin-view');
+
   return (
     <>
       <nav className="bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-4 xl:py-4 xl:px-0">
-          <div className="flex items-center cursor-pointer">
+          <div onClick={()=>router.push('/')} className="flex items-center cursor-pointer">
             <span className="slef-center text-2xl font-semibold ">
               Ecommercery
             </span>
           </div>
 
-          <NavItems />
+          <NavItems isAdminView={isAdminView} router={router} />
 
           <div className="flex gap-2">
             {isAuthUser ? (
@@ -84,9 +89,9 @@ const Navbar = () => {
             {/* perlu di ingat tampilkan product sesuai admin yang create product */}
             {user?.role === "admin" ? (
               isAdminView ? (
-                <button className="button">Client View</button>
+                <button onClick={()=>router.push('/')} className="button">Client View</button>
               ) : (
-                <button className="button">Admin View</button>
+                <button onClick={()=>router.push('/admin-view')} className="button">Admin View</button>
               )
             ) : null}
 
@@ -128,7 +133,7 @@ const Navbar = () => {
 
       <CommonModal
         showModalTitle={false}
-        mainContent={<NavItems isModalView={true} />}
+        mainContent={<NavItems isModalView={true} isAdminView={isAdminView} router={router} />}
         show={showNavModal}
         setShow={setShowNavModal}
       />

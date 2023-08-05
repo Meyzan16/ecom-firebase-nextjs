@@ -21,12 +21,12 @@ const Login = () => {
   const router = useRouter();
   const [formData, setFormData] = useState(initialFormData);
   const {
-    commonLoader,
-    setCommonLoader,
     isAuthUser,
     setIsAuthUser,
     user,
     setUser,
+    componentLevelLoader,
+    setComponentLevelLoader,
   } = useContext(GlobalContext);
 
   // console.log(formData);
@@ -43,9 +43,9 @@ const Login = () => {
   }
 
   async function handleLogin() {
-    setCommonLoader(true);
+    setComponentLevelLoader({ loading: true, id: "" });
     const res = await login(formData);
-    console.log(res, 'login');
+    // console.log(res, "login");
 
     if (res.success) {
       toast.success(res.message, {
@@ -55,21 +55,22 @@ const Login = () => {
       setUser(res?.userDoc?.user);
       Cookies.set("token", res?.userDoc?.token);
       localStorage.setItem("user", JSON.stringify(res?.userDoc?.user));
-      setCommonLoader(false);
+      setComponentLevelLoader({ loading: false, id: "" });
     } else {
       toast.error(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
       setIsAuthUser(false);
-      setCommonLoader(false);
+      setComponentLevelLoader({ loading: false, id: "" });
     }
   }
 
   // console.log(isAuthUser, user);
 
+  //jika ada user yang login maka jalankan use effect dan link access login di tendang
   useEffect(() => {
-    if(isAuthUser) router.push('/');
-  },[isAuthUser]);
+    if (isAuthUser) router.push("/");
+  }, [isAuthUser]);
 
   return (
     <div className="bg-white relative">
@@ -103,15 +104,15 @@ const Login = () => {
                 disabled={!isFormValid()}
                 onClick={handleLogin}
               >
-                 {commonLoader ? (
-                    <ComponentLevelLoader
-                      text={"Login"}
-                      color={"#ffffff"}
-                      loading={commonLoader}
-                    />
-                  ) : (
-                    "Login"
-                  )}
+                {componentLevelLoader && componentLevelLoader.loading ? (
+                  <ComponentLevelLoader
+                    text={"Logging In"}
+                    color={"#ffffff"}
+                    loading={componentLevelLoader && componentLevelLoader.loading}
+                  />
+                ) : (
+                  "Login"
+                )}
               </button>
 
               <div className="text-center text-lg font-medium text-gray-600">

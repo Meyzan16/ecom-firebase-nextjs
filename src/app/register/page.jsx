@@ -7,7 +7,7 @@ import Notification from "@/components/Notification";
 import { GlobalContext } from "@/context";
 import { registerNewUser } from "@/services/register";
 import { registrationFormControls } from "@/utils";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -21,7 +21,7 @@ const initialFormData = {
 const Register = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [isRegistered, setIsRegistered] = useState(false);
-  const { commonLoader, setCommonLoader } = useContext(GlobalContext);
+  const { pageLevelLoader, setPageLevelLoader , isAuthUser } = useContext(GlobalContext);
   const router = useRouter();
 
   // console.log(formData);
@@ -43,22 +43,27 @@ const Register = () => {
   // console.log(isFormValid());
 
   async function handleRegister() {
-    setCommonLoader(true);
+    setPageLevelLoader(true);
     const data = await registerNewUser(formData);
     if (data.success) {
       toast.success(data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
       setIsRegistered(true);
-      setCommonLoader(false);
+      setPageLevelLoader(false);
     } else {
       toast.error(data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
-      setCommonLoader(false);
+      setPageLevelLoader(false);
     }
     // console.log(data);
   }
+
+  //jika ada user yang login maka jalankan use effect dan link access login di tendang
+  useEffect(() => {
+    if (isAuthUser) router.push("/");
+  }, [isAuthUser]);
 
   return (
     <div className="bg-white relative">
@@ -114,11 +119,11 @@ const Register = () => {
                   disabled={!isFormValid()}
                   onClick={handleRegister}
                 >
-                  {commonLoader ? (
+                  {pageLevelLoader ? (
                     <ComponentLevelLoader
                       text={"Registering"}
                       color={"#ffffff"}
-                      loading={commonLoader}
+                      loading={pageLevelLoader}
                     />
                   ) : (
                     "Register"

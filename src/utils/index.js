@@ -30,7 +30,7 @@ export const adminNavOptions = [
     {
         id: "adminListing",
         label: "Manage All Products",
-        path: "/admin-view/all-product",
+        path: "/admin-view/all-products",
     },
     {
         id: "adminNewProduct",
@@ -96,3 +96,106 @@ export const loginFormControls = [
         componentType: 'input',
     },
 ];
+
+export const adminAddProductformControls = [
+    {
+        id:'name',
+        type: 'text',
+        placeholder: 'Enter name',
+        label: 'Name',
+        componentType: 'input',
+    },
+    {
+        id:'price',
+        type: 'number',
+        placeholder: 'Enter price',
+        label: 'Price',
+        componentType: 'input',
+    },
+    {
+        id:'description',
+        type: 'text',
+        placeholder: 'Enter description',
+        label: 'Description',
+        componentType: 'input',
+    },
+    {
+        id:'category',
+        type: '',
+        placeholder: '',
+        label: 'Category',
+        componentType: 'select',
+        options: [
+            {
+                id: 'men',
+                label: 'Men'
+            },
+            {
+                id: 'women',
+                label: 'Women'
+            },
+            {
+                id: 'kids',
+                label: 'Kids'
+            },
+        ],
+    },
+    {
+        id:'deliveryInfo',
+        type: 'text',
+        placeholder: 'Enter deliveryInfo',
+        label: 'Delivery Info',
+        componentType: 'input',
+    },
+    {
+        id:'onSale',
+        type: '',
+        placeholder: '',
+        label: 'On Sale',
+        componentType: 'select',
+        options: [
+            {
+                id:'yes',
+                label: 'Yes',
+            },
+            {
+                id:'no',
+                label: 'No',
+            },
+        ],
+    },
+    {
+        id:'priceDrop',
+        type: 'number',
+        placeholder: 'Enter price drop',
+        label: 'Price Drop',
+        componentType: 'input',
+    },
+];
+
+export const AvailableSizes = [
+    {
+        id:'s',
+        label: 'S',
+    },
+    {
+        id:'m',
+        label: 'M',
+    },
+    {
+        id:'l',
+        label: 'L',
+    },
+]
+
+export const firebaseConfig = {
+    apiKey: "AIzaSyBFTiQzuV_H63vBD_MHqdXzcUfhO-U5foU",
+    authDomain: "next-js-ecom-firebase.firebaseapp.com",
+    projectId: "next-js-ecom-firebase",
+    storageBucket: "next-js-ecom-firebase.appspot.com",
+    messagingSenderId: "120286749015",
+    appId: "1:120286749015:web:82e64dad5e6cda05ac9e12",
+    measurementId: "G-925LJVPBSF"
+  };
+
+export const firebaseStorageURL = 'gs://next-js-ecom-firebase.appspot.com';
