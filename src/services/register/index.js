@@ -12,7 +12,11 @@ export const registerNewUser = async (formData) => {
 
     return finalData;
     
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    return NextResponse.json({
+      success: false,
+      message: 'error service register',
+      error : error,
+  });
   }
 };

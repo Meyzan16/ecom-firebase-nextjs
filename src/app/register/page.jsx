@@ -21,7 +21,8 @@ const initialFormData = {
 const Register = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [isRegistered, setIsRegistered] = useState(false);
-  const { pageLevelLoader, setPageLevelLoader , isAuthUser } = useContext(GlobalContext);
+  const { pageLevelLoader, setPageLevelLoader, isAuthUser } =
+    useContext(GlobalContext);
   const router = useRouter();
 
   // console.log(formData);
@@ -88,6 +89,7 @@ const Register = () => {
                 {registrationFormControls.map((controlItem) =>
                   controlItem.componentType === "input" ? (
                     <InputComponent
+                      key={controlItem.id}
                       type={controlItem.type}
                       placeholder={controlItem.placeholder}
                       label={controlItem.label}
@@ -101,6 +103,7 @@ const Register = () => {
                     />
                   ) : controlItem.componentType === "select" ? (
                     <SelectComponent
+                      key={controlItem.id}
                       options={controlItem.options}
                       label={controlItem.label}
                       onChange={(event) => {

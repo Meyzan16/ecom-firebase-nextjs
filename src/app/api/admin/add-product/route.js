@@ -2,6 +2,8 @@ import connectToDB from "@/database";
 import { NextResponse } from "next/server";
 import Joi from "joi";
 import Product from "@/models/product";
+import slugify from "slugify";
+import AuthUser from "@/middleware/AuthUser";
 
 const AddNewProductSchema = Joi.object({
   imageUrl: Joi.string().required().messages({
@@ -24,9 +26,11 @@ export const dynamic = "force-dynamic";
 export async function POST(req) {
   try {
     await connectToDB();
-    const user = "admin";
 
-    if (user === "admin") {
+    //middleware
+    const isAuthUser = await AuthUser(req);
+
+    if (isAuthUser?.role === "admin") {
 
       const {
         userId,
@@ -63,6 +67,7 @@ export async function POST(req) {
       const newCreatedProduct = new Product({
         owner: userId,
         name,
+        slug:slugify(name),
         description,
         price,
         category,
@@ -91,15 +96,13 @@ export async function POST(req) {
       return NextResponse.json({
         success: false,
         message: "You are not authorized !",
-        error,
       });
     }
   } catch (error) {
-    // console.log("Error is add product");
-    return NextResponse.json({
-      success: false,
-      message: "Something went wrong ! Please try again later",
-      error,
-    });
+    console.log(error);
+        return NextResponse.json({
+        success: false,
+        message: "Something went wrong ! Please try again later",
+        });
   }
 }

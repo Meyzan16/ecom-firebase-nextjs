@@ -11,7 +11,11 @@ export const login = async (formData) => {
     const data = await response.json();
     return data;
     
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    return NextResponse.json({
+      success: false,
+      message: 'error service ogin',
+      error : error,
+  });
   }
 };

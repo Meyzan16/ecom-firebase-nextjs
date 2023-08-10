@@ -29,3 +29,11 @@ body::-webkit-scrollbar-thumb {
 .button-cancel {
   @apply mt-1.5  bg-red-600 px-5 py-3 text-xs font-medium uppercase tracking-wide text-white rounded-xl;
 }
+
+.button-update {
+  @apply mt-1.5  bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white rounded-r-lg;
+}
+
+.button-delete {
+  @apply mt-1.5  bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white rounded-l-lg;
+}

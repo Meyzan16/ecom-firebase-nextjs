@@ -18,7 +18,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { useContext, useState, useEffect } from "react";
-import { addNewProduct } from "@/services/product";
+import { addNewProduct, updateAdminProducts } from "@/services/product";
 import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
 import Notification from "@/components/Notification";
@@ -72,9 +72,23 @@ const initialFormData = {
 
 const AdminAddNewProduct = () => {
   const router = useRouter();
-  const { user, componentLevelLoader, setComponentLevelLoader,isAuthUser } = useContext(GlobalContext);
 
-  const [formData, setFormData] = useState({...initialFormData,userId: user?._id});
+  const {
+    user,
+    componentLevelLoader,
+    setComponentLevelLoader,
+    currentUpdatedProduct,
+    setCurrentUpdatedProduct,
+  } = useContext(GlobalContext);
+
+  const [formData, setFormData] = useState({
+    ...initialFormData,
+    userId: user?._id,
+  });
+
+  useEffect(() => {
+    if (currentUpdatedProduct !== null) setFormData(currentUpdatedProduct);
+  }, [currentUpdatedProduct]);
 
   //image
   const handleImage = async (event) => {
@@ -110,17 +124,22 @@ const AdminAddNewProduct = () => {
 
   const handleaddproduct = async () => {
     setComponentLevelLoader({ loading: true, id: "" });
-    const res = await addNewProduct(formData);
+
+    const res =
+      currentUpdatedProduct !== null
+        ? await updateAdminProducts(formData)
+        : await addNewProduct(formData);
 
     if (res.success) {
       setComponentLevelLoader({ loading: false, id: "" });
       toast.success(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
-      setFormData(initialFormData);
       setTimeout(() => {
-        router.push('/admin-view/all-products')
+        router.push("/admin-view/all-products");
       }, 2000);
+      setFormData(initialFormData);
+      setCurrentUpdatedProduct(null);
     } else {
       setComponentLevelLoader({ loading: false, id: "" });
       toast.error(res.message, {
@@ -129,15 +148,7 @@ const AdminAddNewProduct = () => {
     }
   };
 
-  //jika tidak user yang login maka jalankan use effect dan link access login di tendang
-  useEffect(() => {
-    if (!isAuthUser)  
-    setTimeout(() => {
-      router.push('/')
-    }, 1000);
-  }, [!isAuthUser]);
-
-  console.log(formData);
+  // console.log(formData);
 
   return (
     <div className="w-full mt-5 relative">
@@ -194,16 +205,16 @@ const AdminAddNewProduct = () => {
             <button onClick={handleaddproduct} className="button">
               {componentLevelLoader && componentLevelLoader.loading ? (
                 <ComponentLevelLoader
-                  text={"Adding Product"}
+                  text={currentUpdatedProduct !== null ? 'Updating Product' : 'Adding Product' }
                   color={"#ffffff"}
                   loading={componentLevelLoader && componentLevelLoader.loading}
                 />
               ) : (
-                "Add Product"
+                `${currentUpdatedProduct !== null ? 'Update Product' : 'Add Product' }`
               )}
             </button>
 
-            <Link href="/admin-view" className="button-cancel">
+            <Link href="/admin-view/all-products" className="button-cancel">
               Cancel
             </Link>
           </div>

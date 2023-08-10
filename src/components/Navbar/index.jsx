@@ -2,12 +2,11 @@
 
 import { GlobalContext } from "@/context";
 import { adminNavOptions, navOptions } from "@/utils";
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import CommonModal from "../CommonModal";
 import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-
-
+import CartModal from "../CartModal";
 
 function NavItems({ isModalView = false, isAdminView, router }) {
   return (
@@ -50,27 +49,47 @@ function NavItems({ isModalView = false, isAdminView, router }) {
 const Navbar = () => {
   const router = useRouter();
 
-  const { showNavModal, setShowNavModal } = useContext(GlobalContext);
-  const { user, isAuthUser,setIsAuthUser,setUser } = useContext(GlobalContext);
+  const {
+    user,
+    isAuthUser,
+    setIsAuthUser,
+    setUser,
+    showNavModal,
+    setShowNavModal,
+    currentUpdatedProduct,
+    setCurrentUpdatedProduct,
+    showCartModal,
+    setShowCartModal
+  } = useContext(GlobalContext);
   const pathName = usePathname();
 
-  // console.log(user,isAuthUser, 'navbar');
+  
+  useEffect(() => {
+    if (
+      pathName !== "/admin-view/add-product" &&
+      currentUpdatedProduct !== null
+    )
+      setCurrentUpdatedProduct(null);
+  }, [pathName]);
 
-  async function handleLogout (){
+  async function handleLogout() {
     setIsAuthUser(false);
     setUser(null);
-    Cookies.remove('token');
+    Cookies.remove("token");
     localStorage.clear();
-    router.push('/')
+    router.push("/");
   }
 
-  const isAdminView = pathName.includes('admin-view');
+  const isAdminView = pathName.includes("admin-view");
 
   return (
     <>
       <nav className="bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-4 xl:py-4 xl:px-0">
-          <div onClick={()=>router.push('/')} className="flex items-center cursor-pointer">
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-4 xl:py-4 ">
+          <div
+            onClick={() => router.push("/")}
+            className="flex items-center cursor-pointer"
+          >
             <span className="slef-center text-2xl font-semibold ">
               Ecommercery
             </span>
@@ -82,21 +101,30 @@ const Navbar = () => {
             {isAuthUser ? (
               <Fragment>
                 <button className="button">Account</button>
-                <button className="button">Cart</button>
+                <button onClick={() => setShowCartModal(true)} className="button">Cart</button>
               </Fragment>
             ) : null}
 
             {/* perlu di ingat tampilkan product sesuai admin yang create product */}
             {user?.role === "admin" ? (
               isAdminView ? (
-                <button onClick={()=>router.push('/')} className="button">Client View</button>
+                <button onClick={() => router.push("/")} className="button">
+                  Client View
+                </button>
               ) : (
-                <button onClick={()=>router.push('/admin-view')} className="button">Admin View</button>
+                <button
+                  onClick={() => router.push("/admin-view")}
+                  className="button"
+                >
+                  Admin View
+                </button>
               )
             ) : null}
 
             {isAuthUser ? (
-              <button onClick={handleLogout} className="button">Logout</button>
+              <button onClick={handleLogout} className="button">
+                Logout
+              </button>
             ) : (
               <button className="button" onClick={() => router.push("/login")}>
                 Login
@@ -133,10 +161,21 @@ const Navbar = () => {
 
       <CommonModal
         showModalTitle={false}
-        mainContent={<NavItems isModalView={true} isAdminView={isAdminView} router={router} />}
+        mainContent={
+          <NavItems
+            isModalView={true}
+            isAdminView={isAdminView}
+            router={router}
+          />
+        }
         show={showNavModal}
         setShow={setShowNavModal}
       />
+      {
+        showCartModal && (
+          <CartModal/>
+        )
+      }
     </>
   );
 };

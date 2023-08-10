@@ -9,7 +9,7 @@ export default function GlobalState({ children }) {
   const [showNavModal, setShowNavModal] = useState(false);
 
   //register
-  const [pageLevelLoader, setPageLevelLoader] = useState(false);
+  const [pageLevelLoader, setPageLevelLoader] = useState(true);
 
   //login
   const [componentLevelLoader, setComponentLevelLoader] = useState({
@@ -18,9 +18,14 @@ export default function GlobalState({ children }) {
   });
   const [isAuthUser, setIsAuthUser] = useState(null);
   const [user, setUser] = useState(null);
+  const [currentUpdatedProduct, setCurrentUpdatedProduct] = useState(null);
+  const [showCartModal, setShowCartModal] = useState(false);
+
+  const [cartItem, setCartItem] = useState([]);
+
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    // console.log(Cookies.get('token'))
     if (Cookies.get("token") !== undefined) {
       setIsAuthUser(true);
       const userData = JSON.parse(localStorage.getItem("user")) || {};
@@ -43,6 +48,13 @@ export default function GlobalState({ children }) {
         setUser,
         componentLevelLoader,
         setComponentLevelLoader,
+        currentUpdatedProduct,
+        setCurrentUpdatedProduct,
+        showCartModal,
+        setShowCartModal,
+        cartItem,
+        setCartItem,
+        products, setProducts
       }}
     >
       {children}

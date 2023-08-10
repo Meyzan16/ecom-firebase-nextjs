@@ -55,11 +55,10 @@ export async function POST(req) {
       }
     }
   } catch (error) {
-    console.log("Error is new user registration");
+    console.log(error);
     return NextResponse.json({
-      success: false,
-      message: "Something went wrong ! Please try again later",
-      error
+    success: false,
+    message: "Something went wrong ! Please try again later",
     });
   }
 }
