@@ -50,7 +50,7 @@ const ProductButton = ({ item }) => {
     const res = await addToCart({
       productID: getItem._id,
       userID: user._id,
-      owner: item.owner,
+      owner: getItem.owner._id
     });
 
     if (res.success) {

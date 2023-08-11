@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 
 const ProductSchema = new mongoose.Schema(
   {
-    owner: {
+    owner : {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref:'User'
     },
     name: String,
     slug: String,
@@ -20,7 +20,7 @@ const ProductSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Product = mongoose.models.Products || mongoose.model('Products', ProductSchema);
+const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema);
 
 export default Product;
 

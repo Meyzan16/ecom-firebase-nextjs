@@ -85,7 +85,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-4 xl:py-4 ">
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-4  ">
           <div
             onClick={() => router.push("/")}
             className="flex items-center cursor-pointer"
@@ -100,7 +100,7 @@ const Navbar = () => {
           <div className="flex gap-2">
             {isAuthUser ? (
               <Fragment>
-                <button className="button">Account</button>
+                <button onClick={() => router.push('/account')} className="button">Account</button>
                 <button onClick={() => setShowCartModal(true)} className="button">Cart</button>
               </Fragment>
             ) : null}

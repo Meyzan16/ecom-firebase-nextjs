@@ -12,10 +12,6 @@ export const login = async (formData) => {
     return data;
     
   } catch (error) {
-    return NextResponse.json({
-      success: false,
-      message: 'error service ogin',
-      error : error,
-  });
+    console.error(error);
   }
 };

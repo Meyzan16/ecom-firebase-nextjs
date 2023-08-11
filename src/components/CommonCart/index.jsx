@@ -9,10 +9,9 @@ const CommonCart = ({
   componentLevelLoader,
 }) => {
   return (
-    <section className=" bg-gray-100 py-8">
-      <div className="mx-auto px-4 ">
-        <div className="mx-auto max-w-screen-xl">
-          <div className="bg-white shadow-lg">
+    <section className="bg-gray-100 py-12 ">
+        <div className="mx-auto max-w-screen-xl px-4 ">
+          <div className="bg-white shadow-lg rounded-xl">
             <div className="px-4 py-6 sm:px-8 sm:py-10">
               <div className="flow-root">
                 {cartItems && cartItems.length > 0 ? (
@@ -104,7 +103,7 @@ const CommonCart = ({
                 <div className="mt-5 text-center">
                   <button
                     disabled={cartItems.length === 0}
-                    className=" disabled:opacity-50 w-full inline-block button"
+                    className=" disabled:opacity-50 w-full inline-block mt-1.5 button"
                   >
                     Checkout
                   </button>
@@ -113,7 +112,6 @@ const CommonCart = ({
             </div>
           </div>
         </div>
-      </div>
     </section>
   );
 };

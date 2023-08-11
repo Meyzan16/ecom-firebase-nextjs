@@ -9,7 +9,7 @@ export default function GlobalState({ children }) {
   const [showNavModal, setShowNavModal] = useState(false);
 
   //register
-  const [pageLevelLoader, setPageLevelLoader] = useState(true);
+  const [pageLevelLoader, setPageLevelLoader] = useState(false);
 
   //login
   const [componentLevelLoader, setComponentLevelLoader] = useState({
@@ -24,6 +24,14 @@ export default function GlobalState({ children }) {
   const [cartItem, setCartItem] = useState([]);
 
   const [products, setProducts] = useState([]);
+  const [getaddress, setAddress] = useState([]);
+  const [addressFormData, setAddressFormData] = useState({
+    address: "",
+    fullName: "",
+    city: "",
+    country: "",
+    postalCode: "",
+  });
 
   useEffect(() => {
     if (Cookies.get("token") !== undefined) {
@@ -54,7 +62,12 @@ export default function GlobalState({ children }) {
         setShowCartModal,
         cartItem,
         setCartItem,
-        products, setProducts
+        products,
+        setProducts,
+        getaddress,
+        setAddress,
+        addressFormData,
+        setAddressFormData,
       }}
     >
       {children}

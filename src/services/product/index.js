@@ -1,8 +1,6 @@
 
 
 //add  a new product service
-
-import { NextResponse } from "next/server";
 import Cookies from 'js-cookie';
 
 export const addNewProduct = async (formData) => {
@@ -39,8 +37,6 @@ export const getAllAdminProducts = async (id) => {
     }
 }
 
-
-
 export const updateAdminProducts = async (formData) => {
     try {
         const response = await fetch('/api/admin/update-product',{
@@ -56,11 +52,7 @@ export const updateAdminProducts = async (formData) => {
         return data;
 
     } catch (error) {
-        return NextResponse.json({
-            success: false,
-            message: 'error service update admin products',
-            error : error,
-        });
+        console.error(error);
     }
 }
 

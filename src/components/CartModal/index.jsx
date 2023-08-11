@@ -87,11 +87,10 @@ const CartModal = () => {
                       className="font-medium text-red-800 sm:order-2"
                       onClick={() => handleDeleteCartItem(item._id)}
                     >
-                      {
-                      componentLevelLoader.loading &&
+                      {componentLevelLoader.loading &&
                       componentLevelLoader.id === item._id ? (
                         <ComponentLevelLoader
-                          text={'Removing'}
+                          text={"Removing"}
                           color={"#000000"}
                           loading={
                             componentLevelLoader && componentLevelLoader.loading
@@ -108,17 +107,23 @@ const CartModal = () => {
           </ul>
         ) : null
       }
-
       buttonComponent={
         <Fragment>
-          <button onClick={() => router.push('/cart')} type="button" className="w-full inline-block button">
+          <button
+            onClick={() => {
+              router.push("/cart")
+              setShowCartModal(false)
+            }}
+            type=" button"
+            className="w-full mt-1.5 inline-block button"
+          >
             Go To Cart
           </button>
 
           <button
             disabled={cartItem && cartItem.length === 0}
             type="button"
-            className="w-full inline-block button button disabled:opacity-50"
+            className="mt-1.5  w-full inline-block button button disabled:opacity-50"
           >
             Checkout
           </button>

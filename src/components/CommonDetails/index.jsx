@@ -1,11 +1,45 @@
 "use client";
 
+import { GlobalContext } from "@/context";
+import { addToCart } from "@/services/cart";
+import { useContext } from "react";
+import { toast } from "react-toastify";
+import Notification from "../Notification";
+import ComponentLevelLoader from "../Loader/componentlevel";
+
 const CommonDetails = ({ item }) => {
+
+  const {user,componentLevelLoader,setComponentLevelLoader,setShowCartModal} = useContext(GlobalContext);
+
+  async function handleAddToCart({getItem}) {
+    // console.log(getItem);
+    setComponentLevelLoader({ loading: true, id: getItem._id });
+    const res = await addToCart({
+      productID: getItem._id,
+      userID: user._id,
+      owner: getItem.owner._id,
+    });
+
+    if (res.success) {
+      setComponentLevelLoader({ loading: false, id: "" });
+      toast.success(res.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setShowCartModal(true);
+    } else {
+      setComponentLevelLoader({ loading: false, id: "" });
+      toast.error(res.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setShowCartModal(true);
+    }
+  }
+
+
   return (
     <section className="mx-auto max-w-screen-xl px-4 py-8 lg:py-0 ">
       <div className="container mx-auto ">
 
-     
         <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:grid-cols-5 lg:gap-16">
           
           <div className="lg:col-span-3 lg:row-end-1">
@@ -69,9 +103,19 @@ const CommonDetails = ({ item }) => {
 
               <button
                 type="button"
+                onClick={() => handleAddToCart(item)}
                 className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium tracking-wide uppercase text-white"
               >
-                Add to cart
+                {
+                  componentLevelLoader.loading && item._id === componentLevelLoader.id ? (
+                    <ComponentLevelLoader 
+                    text={"Adding to cart"}
+                    color={"#ffffff"}
+                    loading={componentLevelLoader && componentLevelLoader.loading}
+                    />
+                  ):'Add to cart'
+                }
+                
               </button>
             </div>
 
@@ -103,7 +147,8 @@ const CommonDetails = ({ item }) => {
 
 
         </div>
-        </div>
+      </div>
+      <Notification />
     </section>
   );
 };

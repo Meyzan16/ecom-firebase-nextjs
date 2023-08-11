@@ -20,26 +20,37 @@ const ProductTile = ({ item }) => {
           </p>
         </div>
       ) : null}
-      <div className="my-4 mx-auto flex w-10/12 flex-col items-start justify-between">
-        <div className="mb-2 flex">
+      <div className="my-2 mx-4   items-center justify-between ">
+
+        <h3 className="text-gray-600 text-sm\">{item.name}</h3>
+
+        <div className="text-sm  text-gray-500 truncate mb-1">
+              {item.description}
+        </div>
+
+        <div className="mb-2 flex gap-1 md:gap-2  items-center">
           <p
-            className={`mr-3 text-xs sm:text-sm  lg:text-md font-semibold ${
+            className={`text-[10px] sm:text-sm  lg:text-md font-semibold ${
               item.onSale === "yes" ? "line-through" : ""
             }`}
           >{`$ ${item.price}`}</p>
 
+          
           {item.onSale === "yes" ? (
-            <p className="mr-3 text-xs sm:text-sm  lg:text-md font-semibold text-red-700">{`$ ${(
-              item.price -
-              item.price * (item.priceDrop / 100)
-            ).toFixed(2)}`}</p>
-          ) : null}
+              <p className="text-[10px] sm:text-sm  lg:text-md font-semibold text-red-700">{`$ ${(
+                item.price -
+                item.price * (item.priceDrop / 100)
+              ).toFixed(2)}`}</p>
+            ) : null}
+
           {item.onSale === "yes" ? (
-            <p className="mr-3 text-xs sm:text-sm  lg:text-md font-semibold">{`-(${item.priceDrop}%) off `}</p>
+            <p className="text-[10px] sm:text-sm  lg:text-md font-semibold">{`-(${item.priceDrop}%) off `}</p>
           ) : null}
           
         </div>
-        <h3 className="md-2 text-gray-600 text-md">{item.name}</h3>
+
+          
+
       </div>
     </div>
   );

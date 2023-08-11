@@ -8,9 +8,10 @@ const CartSchema = new mongoose.Schema({
     },
     productID : {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Products'
+        ref:'Product'
     },
     owner: {type:mongoose.Schema.Types.ObjectId, ref:'User'},
+    
     quantity : {
         type:Number,
         required: true,

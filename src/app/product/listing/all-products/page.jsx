@@ -5,6 +5,7 @@ import React from 'react'
 const AllProducts = async () => {
 
     const getData = await getAllProducts();
+    console.log(getData);
     
 
   return (

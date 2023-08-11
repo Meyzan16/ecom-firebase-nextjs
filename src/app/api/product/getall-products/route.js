@@ -9,7 +9,8 @@ export async function GET(req){
    try {
     await connectToDB();
 
-        const extractAllProduct = await Product.find({})
+        const extractAllProduct = await Product.find({}).populate("owner")
+        // console.log(extractAllProduct);
         
         if (extractAllProduct) {
             return NextResponse.json({

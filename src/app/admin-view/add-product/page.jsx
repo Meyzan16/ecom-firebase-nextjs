@@ -154,6 +154,7 @@ const AdminAddNewProduct = () => {
     <div className="w-full mt-5 relative">
       <div className="flex flex-col items-center justify-start p-10 bg-white shadow-2xl rounded-2xl relative">
         <div className="w-full space-y-8">
+          
           <input
             accept="image/*"
             max="2048"

@@ -13,10 +13,6 @@ export const registerNewUser = async (formData) => {
     return finalData;
     
   } catch (error) {
-    return NextResponse.json({
-      success: false,
-      message: 'error service register',
-      error : error,
-  });
+    console.error(error);
   }
 };
