@@ -36,7 +36,7 @@ export async function POST(req) {
             const addAdress = await Address.create(data);
             if(addAdress){
                 return NextResponse.json({
-                    success: false,
+                    success: true,
                     message: "Address added successfully",
                     });
             }else{

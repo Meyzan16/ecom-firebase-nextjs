@@ -4,7 +4,7 @@ const NewAddressSchema = new mongoose.Schema(
   {
     userID : {
       type: mongoose.Schema.Types.ObjectId,
-      ref:'User'
+      ref:'Users'
     },
     fullName: String,
     address: String,

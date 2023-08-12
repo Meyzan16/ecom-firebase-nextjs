@@ -3,8 +3,9 @@ import mongoose from "mongoose";
 const ProductSchema = new mongoose.Schema(
   {
     owner : {
-      type: mongoose.Schema.Types.ObjectId,
-      ref:'User'
+      type:mongoose.ObjectId,
+      ref:'Users',
+      required:true,
     },
     name: String,
     slug: String,
@@ -20,7 +21,7 @@ const ProductSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema);
+const Product = mongoose.models.Products || mongoose.model('Products', ProductSchema);
 
 export default Product;
 

@@ -45,7 +45,7 @@ export async function PUT(req) {
 
       if (update) {
         return NextResponse.json({
-          success: false,
+          success: true,
           message: "Address update successfully",
         });
       } else {

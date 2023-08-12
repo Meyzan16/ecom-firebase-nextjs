@@ -9,7 +9,7 @@ export async function GET(req){
    try {
     await connectToDB();
 
-        const extractAllProduct = await Product.find({}).populate("owner")
+        const extractAllProduct = await Product.find();
         // console.log(extractAllProduct);
         
         if (extractAllProduct) {
