@@ -14,8 +14,8 @@ const CartModal = () => {
     showCartModal,
     setShowCartModal,
     user,
-    cartItem,
-    setCartItem,
+    cartItems,
+    setCartItems,
     componentLevelLoader,
     setComponentLevelLoader,
   } = useContext(GlobalContext);
@@ -24,16 +24,15 @@ const CartModal = () => {
     const res = await getAllCartItems(user?._id);
 
     if (res.success) {
-      setCartItem(res.data);
+      setCartItems(res.data);
       localStorage.setItem("cartItems", JSON.stringify(res.data));
     }
-
-    console.log(res);
   }
 
   useEffect(() => {
     if (user !== null) extractAllCartItems();
   }, [user]);
+  
 
   async function handleDeleteCartItem(getitemID) {
     setComponentLevelLoader({ loading: true, id: getitemID });
@@ -59,9 +58,9 @@ const CartModal = () => {
       show={showCartModal}
       setShow={setShowCartModal}
       mainContent={
-        cartItem && cartItem.length ? (
+        cartItems && cartItems.length ? (
           <ul role="list" className="-my-6 divide-y devide-gray-300">
-            {cartItem.map((item) => (
+            {cartItems.map((item) => (
               <li key={item._id} className="flex py-6">
                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-300">
                   <img
@@ -121,9 +120,14 @@ const CartModal = () => {
           </button>
 
           <button
-            disabled={cartItem && cartItem.length === 0}
+            disabled={cartItems && cartItems.length === 0}
             type="button"
             className="mt-1.5  w-full inline-block button button disabled:opacity-50"
+            onClick={() => {
+              setShowCartModal(false)
+              router.push('/checkout')}
+            } 
+            
           >
             Checkout
           </button>

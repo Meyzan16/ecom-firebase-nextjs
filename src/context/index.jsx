@@ -1,9 +1,36 @@
 "use client";
 
 import Cookies from "js-cookie";
+import { usePathname, useRouter } from "next/navigation";
 import { createContext, useEffect, useState } from "react";
+import { PulseLoader } from "react-spinners";
 
 export const GlobalContext = createContext(null);
+
+export const initialCheckoutFormData = {
+  shippingAddress: {},
+  paymentMethod: "",
+  totalPrice: 0,
+  isPaid: false,
+  paidAt: new Date(),
+  isProcessing: true,
+};
+
+const protectedRoutes = [
+  "/account",
+  "/orders",
+  "/cart",
+  "/checkout",
+  "/admin-view",
+  "/admin-view/add-product",
+  "/admin-view/all-products",
+];
+
+const protectedAdminRoutes = [
+  "/admin-view",
+  "/admin-view/add-product",
+  "/admin-view/all-products",
+];
 
 export default function GlobalState({ children }) {
   const [showNavModal, setShowNavModal] = useState(false);
@@ -21,7 +48,7 @@ export default function GlobalState({ children }) {
   const [currentUpdatedProduct, setCurrentUpdatedProduct] = useState(null);
   const [showCartModal, setShowCartModal] = useState(false);
 
-  const [cartItem, setCartItem] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   const [products, setProducts] = useState([]);
   const [getaddress, setAddress] = useState([]);
@@ -33,13 +60,47 @@ export default function GlobalState({ children }) {
     postalCode: "",
   });
 
+  const [checkoutFormData, setCheckoutFormData] = useState(
+    initialCheckoutFormData
+  );
+
+  const [allOrdersForUser, setAllOrdersForUser] = useState([]);
+
+  const router = useRouter();
+  const pathName = usePathname();
+
+  useEffect(() => {
+    if (
+      user &&
+      Object.keys(user).length === 0 &&
+      protectedRoutes.indexOf(pathName) > -1
+    )
+      // router.push("/login");
+      router.push("/unauth-check");
+  }, [user, pathName]);
+
+  useEffect(() => {
+    if (
+      user !== null &&
+      user &&
+      Object.keys(user).length > 0 &&
+      user?.role !== "admin" &&
+      protectedAdminRoutes.indexOf(pathName) > -1
+    )
+      router.push("/unauth-page");
+  }, [user, pathName]);
+
   useEffect(() => {
     if (Cookies.get("token") !== undefined) {
       setIsAuthUser(true);
       const userData = JSON.parse(localStorage.getItem("user")) || {};
       setUser(userData);
+
+      const getCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      setCartItems(getCartItems);
     } else {
       setIsAuthUser(false);
+      setUser({}); //authentecated user
     }
   }, [Cookies]);
 
@@ -60,14 +121,18 @@ export default function GlobalState({ children }) {
         setCurrentUpdatedProduct,
         showCartModal,
         setShowCartModal,
-        cartItem,
-        setCartItem,
+        cartItems,
+        setCartItems,
         products,
         setProducts,
         getaddress,
         setAddress,
         addressFormData,
         setAddressFormData,
+        checkoutFormData,
+        setCheckoutFormData,
+        allOrdersForUser,
+        setAllOrdersForUser,
       }}
     >
       {children}

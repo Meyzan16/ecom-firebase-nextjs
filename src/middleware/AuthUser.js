@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +13,6 @@ const AuthUser = async (req) => {
         if(extractAuthUserInfo) return extractAuthUserInfo;
         
     } catch (error) {
-        console.log(error);
         return false;
     }
 }

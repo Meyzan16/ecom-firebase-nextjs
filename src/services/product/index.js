@@ -75,7 +75,7 @@ export const deleteAdminProducts = async (id) => {
 
 export const productByCategory = async (id) => {
     try {
-        const response = await fetch(`http://localhost:3000/api/admin/product-by-category?id=${id}`, {
+        const response = await fetch(`${process.env.NEXTAUTH_URL_INTERNAL}/api/admin/product-by-category?id=${id}`, {
             method: 'GET',
             cache: 'no-store'
         })
@@ -90,7 +90,7 @@ export const productByCategory = async (id) => {
 
 export const productBySlug = async (slug) => {
     try {
-        const response = await fetch(`http://localhost:3000/api/product/product-by-slug/${slug}`, {
+        const response = await fetch(`${process.env.NEXTAUTH_URL_INTERNAL}/api/product/product-by-slug/${slug}`, {
             method: 'GET',
             cache: 'no-store'
         })
@@ -105,7 +105,7 @@ export const productBySlug = async (slug) => {
 
 export const getAllProducts = async () => {
     try {
-        const response = await fetch(`http://localhost:3000/api/product/getall-products`, {
+        const response = await fetch(`${process.env.NEXTAUTH_URL_INTERNAL}/api/product/getall-products`, {
             method: 'GET',
             cache: 'no-store'
         })

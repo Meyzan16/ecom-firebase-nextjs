@@ -35,7 +35,7 @@ const ProductButton = ({ item }) => {
       toast.success(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
-      router.refresh();
+      // router.refresh();
     } else {
       setComponentLevelLoader({ loading: false, id: "" });
       toast.error(res.message, {
@@ -45,12 +45,10 @@ const ProductButton = ({ item }) => {
   }
 
   async function handleAddToCart(getItem) {
-    // console.log(getItem);
     setComponentLevelLoader({ loading: true, id: getItem._id });
     const res = await addToCart({
       productID: getItem._id,
       userID: user._id,
-      owner: getItem.owner._id
     });
 
     if (res.success) {

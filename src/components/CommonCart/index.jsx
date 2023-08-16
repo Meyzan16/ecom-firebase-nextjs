@@ -2,12 +2,16 @@
 
 import React from "react";
 import ComponentLevelLoader from "../Loader/componentlevel";
+import { useRouter } from "next/navigation";
 
 const CommonCart = ({
   cartItems = [],
   handleDeleteCartItem,
   componentLevelLoader,
 }) => {
+
+  const router = useRouter();
+
   return (
     <section className="bg-gray-100 py-12 ">
         <div className="mx-auto max-w-screen-xl px-4 ">
@@ -103,6 +107,7 @@ const CommonCart = ({
                 <div className="mt-5 text-center">
                   <button
                     disabled={cartItems.length === 0}
+                    onClick={() => router.push('/checkout')}
                     className=" disabled:opacity-50 w-full inline-block mt-1.5 button"
                   >
                     Checkout

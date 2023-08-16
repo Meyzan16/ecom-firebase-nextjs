@@ -3,9 +3,8 @@ import mongoose from "mongoose";
 const ProductSchema = new mongoose.Schema(
   {
     owner : {
-      type:mongoose.ObjectId,
-      ref:'Users',
-      required:true,
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'User',
     },
     name: String,
     slug: String,

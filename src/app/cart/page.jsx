@@ -10,8 +10,8 @@ import { toast } from "react-toastify";
 const Cart = () => {
   const {
     user,
-    cartItem,
-    setCartItem,
+    cartItems,
+    setCartItems,
     pageLevelLoader,
     setPageLevelLoader,
     setComponentLevelLoader,
@@ -23,7 +23,7 @@ const Cart = () => {
     const res = await getAllCartItems(user?._id);
 
     if (res.success) {
-      setCartItem(res.data);
+      setCartItems(res.data);
       setPageLevelLoader(false);
       localStorage.setItem("cartItems", JSON.stringify(res.data));
     }
@@ -34,6 +34,7 @@ const Cart = () => {
   useEffect(() => {
     if (user !== null) extractAllCartItems();
   }, [user]);
+  
 
   async function handleDeleteCartItem(getitemID) {
     setComponentLevelLoader({ loading: true, id: getitemID });
@@ -66,7 +67,7 @@ const Cart = () => {
     );
   }
 
-  return <CommonCart componentLevelLoader={componentLevelLoader} handleDeleteCartItem={handleDeleteCartItem} cartItems={cartItem} />;
+  return <CommonCart componentLevelLoader={componentLevelLoader} handleDeleteCartItem={handleDeleteCartItem} cartItems={cartItems} />;
 };
 
 export default Cart;

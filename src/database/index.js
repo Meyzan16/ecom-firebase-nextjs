@@ -6,8 +6,7 @@ const configOptions = {
 };
 
 const connectToDB = async () => {
-  const connectionUrl =
-    "mongodb+srv://nextjs-firebase:monmon16@cluster0.ipcshmp.mongodb.net/";
+  const connectionUrl = process.env.MONGODB_URI;
   mongoose
     .connect(connectionUrl, configOptions)
     .then(() => console.log("ecommerce database connected successfully"))

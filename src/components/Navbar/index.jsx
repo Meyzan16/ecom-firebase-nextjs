@@ -171,6 +171,7 @@ const Navbar = () => {
         show={showNavModal}
         setShow={setShowNavModal}
       />
+      
       {
         showCartModal && (
           <CartModal/>

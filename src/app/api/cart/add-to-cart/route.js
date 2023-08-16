@@ -7,7 +7,6 @@ import { NextResponse } from "next/server";
 const AddToCart = Joi.object({
   userID: Joi.string().required(),
   productID: Joi.string().required(),
-  owner: Joi.string().required(),
 });
 
 export const dynamic = "force-dynamic";
@@ -19,9 +18,9 @@ export async function POST(req) {
 
     if (isAuthUser) {
       const data = await req.json();
-      const { productID,owner, userID } = data;
+      const { productID, userID } = data;
 
-      const { error } = AddToCart.validate({ userID, productID,owner });
+      const { error } = AddToCart.validate({ userID, productID });
 
       if (error) {
         return NextResponse.json({
@@ -30,7 +29,7 @@ export async function POST(req) {
         });
       }
 
-      const isCurrentCartItemAlreadyExists = await Cart.findOne({productID: productID,userID: userID, owner: owner});
+      const isCurrentCartItemAlreadyExists = await Cart.findOne({productID: productID,userID: userID});
 
       if (isCurrentCartItemAlreadyExists) {
         return NextResponse.json({
