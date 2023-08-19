@@ -21,8 +21,8 @@ const initialFormData = {
 const Register = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [isRegistered, setIsRegistered] = useState(false);
-  const { pageLevelLoader, setPageLevelLoader, isAuthUser } =
-    useContext(GlobalContext);
+  const [getLoading, setLoading] = useState(false);
+  const { isAuthUser } = useContext(GlobalContext);
   const router = useRouter();
 
   // console.log(formData);
@@ -44,19 +44,19 @@ const Register = () => {
   // console.log(isFormValid());
 
   async function handleRegister() {
-    setPageLevelLoader(true);
+    setLoading(true);
     const data = await registerNewUser(formData);
     if (data.success) {
       toast.success(data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
       setIsRegistered(true);
-      setPageLevelLoader(false);
+      setLoading(false);
     } else {
       toast.error(data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
-      setPageLevelLoader(false);
+      setLoading(false);
     }
     // console.log(data);
   }
@@ -122,11 +122,11 @@ const Register = () => {
                   disabled={!isFormValid()}
                   onClick={handleRegister}
                 >
-                  {pageLevelLoader ? (
+                  {getLoading ? (
                     <ComponentLevelLoader
                       text={"Registering"}
                       color={"#ffffff"}
-                      loading={pageLevelLoader}
+                      loading={getLoading}
                     />
                   ) : (
                     "Register"

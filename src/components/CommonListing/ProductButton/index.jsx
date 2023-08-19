@@ -26,12 +26,12 @@ const ProductButton = ({ item }) => {
   const isAdminView = pathName.includes("admin-view");
 
   async function handleDeleteProduct(getitem) {
-    const res = await deleteAdminProducts(item._id.toString());
+    const res = await deleteAdminProducts(item?._id);
     const filteredPosts = products.filter((p) => p._id !== getitem._id);
     setProducts(filteredPosts);
     
     if (res.success) {
-      setComponentLevelLoader({ loading: false, id: item._id });
+      setComponentLevelLoader({ loading: false, id: item?._id });
       toast.success(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -80,7 +80,7 @@ const ProductButton = ({ item }) => {
       <button onClick={() => handleDeleteProduct(item)} className="w-full button-delete">
         {componentLevelLoader &&
         componentLevelLoader.loading &&
-        item._id === componentLevelLoader.id ? (
+        item?._id === componentLevelLoader.id ? (
           <ComponentLevelLoader
             text={"Deleting Product"}
             color={"#ffffff"}
@@ -93,7 +93,7 @@ const ProductButton = ({ item }) => {
     </div>
   ) : (
     <button onClick={() => handleAddToCart(item)} className="button">
-      {componentLevelLoader.loading && componentLevelLoader.id === item._id ? (
+      {componentLevelLoader.loading && componentLevelLoader.id === item?._id ? (
         <ComponentLevelLoader
           text={"Adding to cart"}
           color={"#ffffff"}

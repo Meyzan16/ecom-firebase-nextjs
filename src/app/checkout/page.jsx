@@ -59,17 +59,19 @@ const Checkout = () => {
           localStorage.getItem("checkoutFormData")
         );
 
+        
+          
         const createFinalCheckoutFormData = {
           user: user?._id,
           shippingAddress: getCheckoutFormData.shippingAddress,
           orderItems: cartItems.map((item) => ({
             qty: 1,
             product: item.productID,
+            
           })),
           paymentMethod: "Stripe",
           totalPrice: cartItems.reduce(
-            (total, item) => item.productID.price + total,
-            0
+            (total, item) => item.productID.price + total, 0
           ),
           isPaid: true,
           isProcessing: true,

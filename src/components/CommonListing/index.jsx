@@ -6,11 +6,12 @@ import ProductTile from "./ProductTile";
 import { useRouter } from "next/navigation";
 import Notification from "../Notification";
 
-const CommonListing = ({ data,handleDelete }) => {
+const CommonListing = ({ data }) => {
   const router = useRouter();
   useEffect(() => {
     router.refresh();
   }, []);
+
   return (
     <section className="bg-white py-12 sm:py-16">
       <div className="mx-auto max-w-screen-xl px-4  xl:px-0">
