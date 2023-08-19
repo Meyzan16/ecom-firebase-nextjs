@@ -31,7 +31,6 @@ export async function GET(req, {params}){
         return NextResponse.json({
             success: false,
             message: "You are not authorized !",
-            error,
           });
     }
    } catch (error) {

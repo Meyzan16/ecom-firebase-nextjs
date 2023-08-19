@@ -9,9 +9,11 @@ export async function GET(req) {
   try {
     await connectToDB();
     const isAuthUser = await AuthUser(req);
+    
     if (isAuthUser) {
       const { searchParams } = new URL(req.url);
       const id = searchParams.get("id");
+
       if (!id) {
         return NextResponse.json({
           success: false,
@@ -33,12 +35,15 @@ export async function GET(req) {
           status: 204,
         });
       }
-    } else {
-      return NextResponse.json({
-        success: false,
-        message: "You are not authenticated",
-      });
-    }
+
+     } else {
+          return NextResponse.json({
+            success: false,
+            message: "You are not authenticated",
+          });
+        }
+
+
   } catch (error) {
     console.log(error);
     return NextResponse.json({

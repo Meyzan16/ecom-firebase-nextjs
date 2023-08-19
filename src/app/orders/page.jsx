@@ -6,6 +6,7 @@ import { getAllOrderForUser } from "@/services/order";
 import React, { useContext, useEffect } from "react";
 import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const Orders = () => {
   const {
@@ -15,6 +16,7 @@ const Orders = () => {
     allOrdersForUser,
     setAllOrdersForUser,
   } = useContext(GlobalContext);
+  const router = useRouter();
 
   async function extractAllOrders() {
     setPageLevelLoader(true);
@@ -52,10 +54,8 @@ const Orders = () => {
     );
   }
 
-  console.log(allOrdersForUser);
-
   return (
-    <section className="h-screen bg-gray-100 py-12">
+    <section className=" py-12">
         <div className="mx-auto max-w-screen-xl px-4 ">
               <div className="flow-root">
                 {allOrdersForUser && allOrdersForUser.length ? (
@@ -63,7 +63,7 @@ const Orders = () => {
                     {allOrdersForUser.map((item) => (
                       <li
                         key={item._id}
-                        className="bg-white shadow p-5 flex flex-col space-y-3 py-3 text-left"
+                        className="bg-white shadow-xl p-5 flex flex-col space-y-3 py-3 text-left rounded-xl"
                       >
                         <div className="flex flex-wrap">
                           <h1 className="font-bold text-lg mb-3 flex-1">
@@ -75,7 +75,7 @@ const Orders = () => {
                               Count paid amount
                             </p>
                             <p className="mr-3 text-lg font-semibold text-gray-900">
-                              $ {item.totalPrice}
+                              ${item.totalPrice}
                             </p>
                           </div>
 
@@ -99,7 +99,7 @@ const Orders = () => {
                               ? "order is processing"
                               : "Order is delivered"}
                           </button>
-                          <button className=" mt-4 mr-2 button inline-block">
+                          <button onClick={() => router.push(`/orders/${item._id}`)} className=" mt-4 mr-2 button inline-block">
                             View Order Details
                           </button>
                         </div>

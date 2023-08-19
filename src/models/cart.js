@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import User from "./user";
+import Product from "./product";
 
 const CartSchema = new mongoose.Schema(
   {

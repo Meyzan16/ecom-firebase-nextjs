@@ -13,7 +13,7 @@ const CommonCart = ({
   const router = useRouter();
 
   return (
-    <section className="bg-gray-100 py-12 ">
+    <section className="py-12 ">
         <div className="mx-auto max-w-screen-xl px-4 ">
           <div className="bg-white shadow-lg rounded-xl">
             <div className="px-4 py-6 sm:px-8 sm:py-10">
@@ -38,14 +38,9 @@ const CommonCart = ({
                               <p className="text-base font-semibold text-gray-900">
                                 {item.productID.name}
                               </p>
-                            </div>
-                            <div className="mt-4 flex gap-3 items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
-                              <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-1 sm:ml-8 sm:text-right">
-                                ${item.productID.price}
-                              </p>
 
                               <button
-                                className="font-medium text-red-600 sm:order-2"
+                                className="font-medium text-red-600 flex flex-1 items-end justify-between text-sm"
                                 type="button"
                                 onClick={() => handleDeleteCartItem(item._id)}
                               >
@@ -61,9 +56,18 @@ const CommonCart = ({
                                   "Remove"
                                 )}
                               </button>
+                              
+                            </div>
+                            <div className="mt-4 flex gap-3 items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
+                              <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-1 sm:ml-8 sm:text-right">
+                                ${item.productID.price}
+                              </p>
+
+                              
                             </div>
                           </div>
                         </div>
+                              
                       </li>
                     ))}
                   </ul>

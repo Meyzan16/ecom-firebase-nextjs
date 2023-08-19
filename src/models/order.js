@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
+import Product from "./product";
+import User from "./user";
 
 const OrderSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
     },
     orderItems: [
       {

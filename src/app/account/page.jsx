@@ -11,6 +11,7 @@ import {
   updateAddress,
 } from "@/services/address";
 import { addNewAddressFormControls } from "@/utils";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { PulseLoader } from "react-spinners";
 import { toast } from "react-toastify";
@@ -30,6 +31,7 @@ const page = () => {
 
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [currentEditAddressId, setcurrentEditAddressId] = useState(null);
+  const router = useRouter();
 
   async function extractAllAddress() {
     setPageLevelLoader(true);
@@ -105,8 +107,7 @@ const page = () => {
   }, [user]);
 
   return (
-    <section>
-      <div className=" bg-gray-100 py-12">
+    <section className="py-12">
         <div className="mx-auto max-w-screen-xl px-4">
           <div className="bg-white shadow-lg rounded-xl">
             <div className="p-6 sm:p-12">
@@ -122,7 +123,7 @@ const page = () => {
                 <p>role : {user?.role}</p>
               </div>
 
-              <button className="mt-5 button inline-block">
+              <button onClick={() => router.push('/orders')} className="mt-5 button inline-block">
                 View your orders
               </button>
 
@@ -231,7 +232,6 @@ const page = () => {
             </div>
           </div>
         </div>
-      </div>
       <Notification />
     </section>
   );
