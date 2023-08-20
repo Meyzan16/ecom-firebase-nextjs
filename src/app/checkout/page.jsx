@@ -15,8 +15,7 @@ const Checkout = () => {
   const router = useRouter();
   const params = useSearchParams();
 
-  const publisKey =
-    "pk_test_51NeujeHeMgTebgqpp6DIuUCxYSL7apVaXSfP2xcxCPNrGaRaW5kyZHPsaSqZUsLlYgzI4vtnFtELqHymcAP0l7ii00rgdLNP8k";
+  const publisKey = "pk_test_51NeujeHeMgTebgqptrLpEI1nELWiqoPfWkEpL9tsCmzwhw9fJYSzuMX4O7FhfHGfSXQQgKKD5XcE9VzPL3BZMxuU00X3KepGvY";
   const stripePromise = loadStripe(publisKey);
 
   const {

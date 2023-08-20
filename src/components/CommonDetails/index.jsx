@@ -11,13 +11,13 @@ const CommonDetails = ({ item }) => {
 
   const {user,componentLevelLoader,setComponentLevelLoader,setShowCartModal} = useContext(GlobalContext);
 
-  async function handleAddToCart({getItem}) {
+  async function handleAddToCart(getItem) {
     // console.log(getItem);
-    setComponentLevelLoader({ loading: true, id: getItem._id });
+
+    setComponentLevelLoader({ loading: true, id: ''});
     const res = await addToCart({
       productID: getItem._id,
       userID: user._id,
-      owner: getItem.owner._id,
     });
 
     if (res.success) {

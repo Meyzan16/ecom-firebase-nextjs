@@ -30,7 +30,7 @@ const AdminView = () => {
       setPageLevelLoader(false);
       setAllOrdersForAdmin(
         res.data && res.data.length
-          ? res.data.filter((item) => item?.user?._id === user?._id)
+          ? res.data.filter((item) => item?.user?._id !== user?._id)
           : []
       );
     } else {
